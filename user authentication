@@ -1,0 +1,12 @@
+private static User authenticateUser(String username, String password) {
+    if (users.containsKey(username)) {
+        User existingUser = users.get(username);
+        if (existingUser.verifyPassword(password)) {
+            return existingUser;
+        } else {
+            System.out.println("Incorrect password.");
+            return null;
+        }
+    }
+    return null;
+}
