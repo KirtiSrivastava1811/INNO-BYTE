@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class QuizManager {
+    private List<Question> questions;
+
+    public QuizManager() {
+        questions = new ArrayList<>();
+        loadQuestions();
+    }
+
+    private void loadQuestions() {
+        questions.add(new Question("What is Java?", new String[]{"A snake", "A programming language", "Coffee", "An island"}, 2));
+        questions.add(new Question("Which keyword is used to create a class?", new String[]{"class", "new", "object", "create"}, 1));
+        // Add more as needed
+    }
+
+    public int startQuiz(Scanner scanner) {
+        int score = 0;
+        for (Question q : questions) {
+            q.displayQuestion();
+            System.out.print("Your answer: ");
+     score++;
+            } else {
+                System.out.println("Incorrect!");
+            }
+            System.out.println();
+        }
+        return score;
+    }
+}
