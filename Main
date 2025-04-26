@@ -1,0 +1,40 @@
+import java.util.*;
+
+public class Main {
+    private static Map<String, User> users = new HashMap<>();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        QuizManager quizManager = new QuizManager();
+
+        System.out.println("Welcome to Online Quiz App");
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        User user = authenticateUser(username, password);
+        if (user == null) {
+            user = new User(username, password);
+            users.put(username, user);
+            System.out.println("New user registered.");
+        } else {
+             System.out.println("New user registered.");
+        } else {
+            System.out.println("Login successful.");
+        }
+
+        int score = quizManager.startQuiz(scanner);
+        user.addScore(score);
+
+        System.out.println("Quiz Finished. Score: " + score);
+        System.out.println("Total Score: " + user.getTotalScore());
+    }
+
+    private static User authenticateUser(String username, String password) {
+        if (users.containsKey(username) && users.get(username).getPassword().equals(password)) {
+            return users.get(username);
+        }
+        return null;
+    }
+}
