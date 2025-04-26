@@ -1,0 +1,36 @@
+import java.io.Serializable;
+
+public class User implements Serializable {
+    private String username;
+    private String hashedPassword;
+    private String salt;
+    private int totalScore;
+
+    public User(String username, String rawPassword) {
+        this.username = username;
+        this.salt = SecurityUtil.generateSalt();
+        this.hashedPassword = SecurityUtil.hashPassword(rawPassword, salt);
+        this.totalScore = 0;
+    }
+
+    public User(String username, String salt, String hashedPassword) {
+        this.username = username;
+        this.salt = salt;
+        this.hashedPassword = hashedPassword;
+        this.totalScore = 0;
+    }
+
+    public String getUsername() { return username; }
+    public String getHashedPassword() { return hashedPassword; }
+    public String getSalt() { return salt; }
+    public int getTotalScore() { return totalScore; }
+
+    public void addScore(int score) {
+        this.totalScore += score;
+    }
+
+    public boolean verifyPassword(String inputPassword) {
+        String hash = SecurityUtil.hashPassword(inputPassword, this.salt);
+        return this.hashedPassword.equals(hash);
+    }
+}
