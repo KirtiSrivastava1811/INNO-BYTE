@@ -1,0 +1,30 @@
+public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    HashMap<String, User> users = FileHelper.loadUsers();
+    QuizManager quizManager = new QuizManager();
+
+    System.out.println("Welcome to Online Quiz App");
+    System.out.print("Enter username: ");
+    String username = scanner.nextLine();
+    System.out.print("Enter password: ");
+    String password = scanner.nextLine();
+
+    User user = users.get(username);
+    if (user != null && user.verifyPassword(password)) {
+        System.out.println("Login successful.");
+    } else if (user == null) {
+        user = new User(username, password);
+        users.put(username, user);
+        System.out.println("New user registered.");
+    } else {
+        System.out.println("Incorrect password. Exiting.");
+        return;
+    }
+
+    int score = quizManager.startQuiz(scanner);
+    user.addScore(score);
+    System.out.println("Your Score: " + score);
+    System.out.println("Total Score: " + user.getTotalScore());
+
+    FileHelper.saveUsers(users);
+}
