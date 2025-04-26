@@ -1,0 +1,38 @@
+import java.io.*;
+import java.util.HashMap;
+import java.util.List;
+
+public class FileHelper {
+
+    public static void saveUsers(HashMap<String, User> users) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.ser"))) {
+            oos.writeObject(users);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static HashMap<String, User> loadUsers() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("users.ser"))) {
+            return (HashMap<String, User>) ois.readObject();
+        } catch (Exception e) {
+            return new HashMap<>();
+        }
+    }
+
+    public static void saveQuestions(List<Question> questions) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("questions.ser"))) {
+            oos.writeObject(questions);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Question> loadQuestions() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("questions.ser"))) {
+            return (List<Question>) ois.readObject();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+}
